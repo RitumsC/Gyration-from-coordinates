@@ -38,7 +38,14 @@ class GyrationMolecule:
         Iz (float): Moment of inertia in first principal direction
     """
 
-    def __init__(self, fname, flag_xyz=1, flag_periodic=0):
+    def __init__(self, fname: str, flag_xyz: int=1, flag_periodic: int=0):
+        """Calculate gyration properties from given file
+
+            Arguments:
+                fname: Filename of coordinates, xyz file or simple list of coordinates
+                flag_xyz: 1 if using xyz file, 0 if using simple list of coordinates
+                flag_periodic: 1 if using periodic system (not yet supported)
+        """
         if flag_xyz:
             self.name = fname.split('.xyz')[0]
 
