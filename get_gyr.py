@@ -1,5 +1,4 @@
-"""
-Module to calculate gyaration and inertial information from coordinates.
+"""Module to calculate gyaration and inertial information from coordinates.
 
 Currently only .xyz file input is supported.
 
@@ -150,14 +149,13 @@ class GyrationMolecule:
     }
 
     @staticmethod
-    def __xyz_to_coords(xyz_file):
-        """
-        Returns atom mass and coordinates from xyz file
+    def __xyz_to_coords(xyz_file: str):
+        """ Returns atom mass and coordinates from xyz file
 
         Arguments:
-          xyz_file : location of xyz file to convert to coordinates
+            xyz_file: location of xyz file to convert to coordinates
         Returns:
-          atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
+            atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
         """
         with open(xyz_file) as file:
             atom_coordinates = [[], [], [], []]
@@ -174,16 +172,14 @@ class GyrationMolecule:
         return atom_coordinates
 
     @staticmethod
-    def __calc_com_gyr(atom_coordinates, periodic=0):
-        """
-        Returns center of mass given atom coordinates under specified conditions.
-            (each atom has unity mass since its CoM for gyration tensor)
+    def __calc_com_gyr(atom_coordinates, periodic: int=0) -> (float, float, float):
+        """Returns center of points given atom coordinates under specified conditions.
 
         Arguments:
-          atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
-          periodic: 1 if coordinates given in periodic system, else 0
+            atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
+            periodic: 1 if coordinates given in periodic system, else 0
         Returns:
-          x_com, y_com, z_com: center of mass for each coordinate
+            x_com, y_com, z_com: center of mass for each coordinate
         """
         if periodic:
             print("Gyration calculations for periodic conditions not yet implemented!")
@@ -198,15 +194,14 @@ class GyrationMolecule:
         return x_com, y_com, z_com
 
     @staticmethod
-    def __calc_com_inertia(atom_coordinates, periodic=0):
-        """
-        Returns center of mass given atom coordinates under specified conditions.
+    def __calc_com_inertia(atom_coordinates, periodic: int=0) -> (float, float, float):
+        """Returns center of mass given atom coordinates under specified conditions.
 
         Arguments:
-          atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
-          periodic: 1 if coordinates given in periodic system, else 0
+            atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
+            periodic: 1 if coordinates given in periodic system, else 0
         Returns:
-          x_com, y_com, z_com: center of mass for each coordinate
+            x_com, y_com, z_com: center of mass for each coordinate
         """
         if periodic:
             print("Inertia calculations for periodic conditions not yet implemented!")
@@ -225,17 +220,15 @@ class GyrationMolecule:
         return x_com, y_com, z_com
 
     @staticmethod
-    def __calc_evals_gyr(atom_coordinates, periodic=0):
-        """
-        Returns eigenvalues squared for gyration tensor.
-
-        For details refer to: https://en.wikipedia.org/wiki/Gyration_tensor
+    def __calc_evals_gyr(atom_coordinates, periodic:int=0) -> (float, float, float):
+        """Returns eigenvalues squared for gyration tensor.
+            For details refer to: https://en.wikipedia.org/wiki/Gyration_tensor
 
         Arguments:
-          atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
-          periodic: 1 if coordinates given in periodic system, else 0
+            atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
+            periodic: 1 if coordinates given in periodic system, else 0
         Returns:
-          Rx2, Ry2, Rz2: squared eigenvalues for all axis [AA**2]
+            Rx2, Ry2, Rz2: squared eigenvalues for all axis [AA**2]
         """
         rx, ry, rz = 0.0, 0.0, 0.0
 
@@ -272,17 +265,16 @@ class GyrationMolecule:
         return rx * rx, ry * ry, rz * rz
 
     @staticmethod
-    def __calc_evals_inertia(atom_coordinates, periodic=0):
-        """
-        Returns eigenvectors for inertia tensor.
+    def __calc_evals_inertia(atom_coordinates, periodic:int=0) -> (float, float, float):
+        """Returns eigenvectors for inertia tensor.
 
         For details refer to: https://en.wikipedia.org/wiki/Moment_of_inertia#Inertia_tensor
 
         Arguments:
-          atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
-          periodic: 1 if coordinates given in periodic system, else 0
+            atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
+            periodic: 1 if coordinates given in periodic system, else 0
         Returns:
-          Ix, Iy, Iz: eigenvalues for inertia tensor's all axis [amu*AA^2]
+            Ix, Iy, Iz: eigenvalues for inertia tensor's all axis [amu*AA^2]
         """
         rx, ry, rz = 0.0, 0.0, 0.0
 
