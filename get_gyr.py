@@ -3,12 +3,18 @@
 Currently only .xyz file input is supported.
 
 To use:
+
 1) import the module in your python script with (script must be in same directory as this file)
-import get_gyr as gyr
+
+```import get_gyr as gyr```
+
 2) read .xyz file
-molecule = gyr.GyrationMolecule("./molecules/water.xyz")
+
+```molecule = gyr.GyrationMolecule("./molecules/water.xyz")```
+
 3) call appropriate variable, e.g.
-print("Relative shape anisotropy is: ", molecule.Rel_anis)
+
+```print("Relative shape anisotropy is: ", molecule.Rel_anis)```
 
 for detailed information see test_gyr.py script
 """
@@ -18,6 +24,19 @@ import re
 
 
 class GyrationMolecule:
+    """Class containing gyration/inertia information for given molecule
+
+    Attributes:
+        Rx2 (float): Radius of gyration squared in first principal direction
+        Ry2 (float): Radius of gyration squared in second principal direction
+        Rz2 (float): Radius of gyration squared in third principal direction
+        Rg (float): Radius of gyration for molecule
+        Rel_anis (float): Relative shape anisotropy, 0 for perfectly spherical arangement\
+                          1 for perfectly linear arangement
+        Ix (float): Moment of inertia in first principal direction
+        Iy (float): Moment of inertia in first principal direction
+        Iz (float): Moment of inertia in first principal direction
+    """
 
     def __init__(self, fname, flag_xyz=1, flag_periodic=0):
         if flag_xyz:
@@ -31,7 +50,7 @@ class GyrationMolecule:
                              / (self.Rx2 + self.Ry2 + self.Rz2)**2 - 0.5)
 
             # Inertia parametrs
-            self.Ix2, self.Iy2, self.Iz2, = self.__calc_evals_inertia(self.__coords)
+            self.Ix, self.Iy, self.Iz, = self.__calc_evals_inertia(self.__coords)
         else:
             print("Not yet implemented")
             quit()
@@ -155,7 +174,7 @@ class GyrationMolecule:
         Arguments:
             xyz_file: location of xyz file to convert to coordinates
         Returns:
-            atom_coordinates: [[mass1, ,mass2,...],[x1, x2...],[y1, y2...],[z1, z2...]]
+            atom_coordinates: [[mass1, ,mass2,...], [x1, x2...], [y1, y2...], [z1, z2...]]
         """
         with open(xyz_file) as file:
             atom_coordinates = [[], [], [], []]
