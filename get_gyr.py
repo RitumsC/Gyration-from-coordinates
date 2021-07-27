@@ -188,6 +188,7 @@ class GyrationMolecule:
             i = 0
             for line in file:
                 if i >= 2:
+                    line = line.lstrip(' \t')
                     atom, x, y, z = re.split(' +|\t|\n', line)[0:4]
                     atom_coordinates[0].append(float(GyrationMolecule.__massDictionary[atom]))
                     atom_coordinates[1].append(float(x))
